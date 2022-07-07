@@ -1,6 +1,6 @@
 import 'package:faker/faker.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:test/test.dart';
 
 import 'package:for_dev/domain/usecases/usecases.dart';
 
@@ -29,8 +29,10 @@ void main() {
     await sut.auth(params);
 
     verify(httpClient.request(
-        url: url,
-        method: 'post',
-        body: {'email': params.email, 'password': params.secret}));
+      url: url,
+      method: 'post',
+      body: {'email': params.email, 'password': params.secret}
+    ));
   });
+
 }
