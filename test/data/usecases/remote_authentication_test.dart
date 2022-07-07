@@ -36,7 +36,7 @@ void main() {
         body: {'email': params.email, 'password': params.secret}));
   });
 
-  test('Shoud throw UnexpectedError if HttpClient return 400', () async {
+  test('Should throw UnexpectedError if HttpClient return 400', () async {
     when(httpClient.request(
       url: anyNamed('url'),
       method: anyNamed('method'),
@@ -48,7 +48,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Shoud throw UnexpectedError if HttpClient return 404', () async {
+  test('Should throw UnexpectedError if HttpClient return 404', () async {
     when(httpClient.request(
       url: anyNamed('url'),
       method: anyNamed('method'),
@@ -60,7 +60,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Shoud throw UnexpectedError if HttpClient return 500', () async {
+  test('Should throw UnexpectedError if HttpClient return 500', () async {
     when(httpClient.request(
       url: anyNamed('url'),
       method: anyNamed('method'),
@@ -72,7 +72,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Shoud throw InvalidCredentialsError if HttpClient return 401', () async {
+  test('Should throw InvalidCredentialsError if HttpClient return 401', () async {
     when(httpClient.request(
       url: anyNamed('url'),
       method: anyNamed('method'),
