@@ -24,8 +24,11 @@ class HttpAdapter {
     final jsonBody = body != null ? json.encode(body) : null;
 
     final response = await client.post(uri, headers: headers, body: jsonBody);
+    final jsonResponse = response.body.isEmpty
+        ? null
+        : json.decode(response.body);
 
-    return jsonDecode(response.body);
+    return jsonResponse;
   }
 }
 
@@ -90,6 +93,18 @@ void main() {
       final response = await sut.request(url: url, method: 'POST');
 
       expect(response, {'any_key': 'any_value'});
+    });
+
+    test('Should return null if post returns 200 with no data', () async {
+      when(client.post(
+        any,
+        body: anyNamed('body'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => Response('', 200));
+
+      final response = await sut.request(url: url, method: 'POST');
+
+      expect(response, null);
     });
   });
 }
