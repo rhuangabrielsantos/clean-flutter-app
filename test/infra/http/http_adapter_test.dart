@@ -24,6 +24,11 @@ class HttpAdapter {
     final jsonBody = body != null ? json.encode(body) : null;
 
     final response = await client.post(uri, headers: headers, body: jsonBody);
+
+    if (response.statusCode == 204) {
+      return null;
+    }
+
     final jsonResponse =
         response.body.isEmpty ? null : json.decode(response.body);
 
@@ -101,6 +106,14 @@ void main() {
 
     test('Should return null if post returns 204', () async {
       mockResponse(204, body: '');
+
+      final response = await sut.request(url: url, method: 'POST');
+
+      expect(response, null);
+    });
+
+    test('Should return null if post returns 204 with data', () async {
+      mockResponse(204);
 
       final response = await sut.request(url: url, method: 'POST');
 
