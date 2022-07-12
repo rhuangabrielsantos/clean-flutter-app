@@ -28,6 +28,13 @@ class HttpAdapter implements HttpClient {
   }
 
   Map _handleResponse(Response response) {
+    if (response.statusCode == 200) {
+      final jsonResponse =
+          response.body.isEmpty ? null : jsonDecode(response.body);
+
+      return jsonResponse;
+    }
+
     if (response.statusCode == 204) {
       return null;
     }
@@ -36,9 +43,6 @@ class HttpAdapter implements HttpClient {
       throw HttpError.badRequest;
     }
 
-    final jsonResponse =
-        response.body.isEmpty ? null : jsonDecode(response.body);
-
-    return jsonResponse;
+    throw HttpError.serverError;
   }
 }
