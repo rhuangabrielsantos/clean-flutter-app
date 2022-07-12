@@ -11,7 +11,11 @@ class HttpAdapter {
 
   Future<void> request({@required String url, @required String method}) async {
     final uri = Uri.parse(url);
-    await client.post(uri);
+    final headers = {
+      'content-type': 'application/json',
+      'accept': 'application/json',
+    };
+    await client.post(uri, headers: headers);
   }
 }
 
@@ -27,7 +31,10 @@ void main() {
 
       await sut.request(url: url, method: 'POST');
 
-      verify(client.post(uri));
+      verify(client.post(uri, headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+      }));
     });
   });
 }
