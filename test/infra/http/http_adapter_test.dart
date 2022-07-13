@@ -22,7 +22,15 @@ void main() {
     uri = Uri.parse(url);
   });
 
-  group('POST', () {
+  group('shared', () {
+    test('Should throw a ServerError if invalid method is provided', () {
+      final response = sut.request(url: url, method: 'invalid_method');
+
+      expect(response, throwsA(HttpError.serverError));
+    });
+  });
+
+  group('post', () {
     PostExpectation mockRequest() => when(client.post(
           any,
           body: anyNamed('body'),
@@ -41,7 +49,7 @@ void main() {
     test('Should call post with correct values', () async {
       await sut.request(
         url: url,
-        method: 'POST',
+        method: 'post',
         body: {'any_key': 'any_value'},
       );
 
@@ -56,13 +64,13 @@ void main() {
     });
 
     test('Should call post without body', () async {
-      await sut.request(url: url, method: 'POST');
+      await sut.request(url: url, method: 'post');
 
       verify(client.post(any, headers: anyNamed('headers')));
     });
 
     test('Should return data if post returns 200', () async {
-      final response = await sut.request(url: url, method: 'POST');
+      final response = await sut.request(url: url, method: 'post');
 
       expect(response, {'any_key': 'any_value'});
     });
@@ -70,7 +78,7 @@ void main() {
     test('Should return null if post returns 200 with no data', () async {
       mockResponse(200, body: '');
 
-      final response = await sut.request(url: url, method: 'POST');
+      final response = await sut.request(url: url, method: 'post');
 
       expect(response, null);
     });
@@ -78,7 +86,7 @@ void main() {
     test('Should return null if post returns 204', () async {
       mockResponse(204, body: '');
 
-      final response = await sut.request(url: url, method: 'POST');
+      final response = await sut.request(url: url, method: 'post');
 
       expect(response, null);
     });
@@ -86,7 +94,7 @@ void main() {
     test('Should return null if post returns 204 with data', () async {
       mockResponse(204);
 
-      final response = await sut.request(url: url, method: 'POST');
+      final response = await sut.request(url: url, method: 'post');
 
       expect(response, null);
     });
@@ -94,7 +102,7 @@ void main() {
     test('Should return BadRequestError if post returns 400', () async {
       mockResponse(400, body: '');
 
-      final future = sut.request(url: url, method: 'POST');
+      final future = sut.request(url: url, method: 'post');
 
       expect(future, throwsA(HttpError.badRequest));
     });
@@ -102,7 +110,7 @@ void main() {
     test('Should return BadRequestError if post returns 400', () async {
       mockResponse(400);
 
-      final future = sut.request(url: url, method: 'POST');
+      final future = sut.request(url: url, method: 'post');
 
       expect(future, throwsA(HttpError.badRequest));
     });
@@ -110,7 +118,7 @@ void main() {
     test('Should return UnauthorizedError if post returns 401', () async {
       mockResponse(401);
 
-      final future = sut.request(url: url, method: 'POST');
+      final future = sut.request(url: url, method: 'post');
 
       expect(future, throwsA(HttpError.unauthorized));
     });
@@ -118,7 +126,7 @@ void main() {
     test('Should return ForbiddenError if post returns 403', () async {
       mockResponse(403);
 
-      final future = sut.request(url: url, method: 'POST');
+      final future = sut.request(url: url, method: 'post');
 
       expect(future, throwsA(HttpError.forbidden));
     });
@@ -126,7 +134,7 @@ void main() {
     test('Should return NotFoundError if post returns 404', () async {
       mockResponse(404);
 
-      final future = sut.request(url: url, method: 'POST');
+      final future = sut.request(url: url, method: 'post');
 
       expect(future, throwsA(HttpError.notFound));
     });
@@ -134,7 +142,7 @@ void main() {
     test('Should return SeverError if post returns 500', () async {
       mockResponse(500);
 
-      final future = sut.request(url: url, method: 'POST');
+      final future = sut.request(url: url, method: 'post');
 
       expect(future, throwsA(HttpError.serverError));
     });
