@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
                       decoration: InputDecoration(
                         labelText: 'E-mail',
                         icon: Icon(
-                          Icons.email, 
+                          Icons.email,
                           color: Theme.of(context).primaryColorLight,
                         ),
                       ),

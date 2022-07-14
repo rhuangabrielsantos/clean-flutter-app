@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class LoginHeader extends StatelessWidget {
@@ -9,13 +8,12 @@ class LoginHeader extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 32),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Theme.of(context).primaryColorDark,
-            Theme.of(context).primaryColorLight,
-          ]
-        ),
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Theme.of(context).primaryColorDark,
+              Theme.of(context).primaryColorLight,
+            ]),
         boxShadow: [
           BoxShadow(
             offset: Offset(0, 0),

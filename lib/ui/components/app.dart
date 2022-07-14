@@ -18,12 +18,11 @@ class App extends StatelessWidget {
         accentColor: primaryColor,
         backgroundColor: Colors.white,
         textTheme: TextTheme(
-          headline1: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: primaryColorDark,
-          )
-        ),
+            headline1: TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          color: primaryColorDark,
+        )),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: primaryColorLight),
@@ -40,9 +39,9 @@ class App extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           textTheme: ButtonTextTheme.primary,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20)
-          )
-        )
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
