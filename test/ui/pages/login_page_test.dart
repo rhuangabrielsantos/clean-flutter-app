@@ -12,12 +12,18 @@ class LoginPresenterSpy extends Mock implements LoginPresenter {}
 main() {
   LoginPresenter presenter;
   StreamController<String> emailErrorController;
+  StreamController<String> passwordErrorController;
 
   Future<void> loadPage(WidgetTester tester) async {
     presenter = LoginPresenterSpy();
+
     emailErrorController = StreamController<String>();
     when(presenter.emailErrorStream)
         .thenAnswer((_) => emailErrorController.stream);
+
+    passwordErrorController = StreamController<String>();
+    when(presenter.passwordErrorStream)
+        .thenAnswer((_) => passwordErrorController.stream);
 
     final loginPage = MaterialApp(home: LoginPage(presenter));
     await tester.pumpWidget(loginPage);
@@ -25,6 +31,7 @@ main() {
 
   tearDown(() {
     emailErrorController.close();
+    passwordErrorController.close();
   });
 
   testWidgets(
@@ -97,7 +104,8 @@ main() {
     expect(emailTextChildren, findsOneWidget);
   });
 
-  testWidgets('Should present no error if email is valid and stream is a empty string',
+  testWidgets(
+      'Should present no error if email is valid and stream is a empty string',
       (WidgetTester tester) async {
     await loadPage(tester);
 
@@ -108,7 +116,17 @@ main() {
       of: find.bySemanticsLabel('Email'),
       matching: find.byType(Text),
     );
-    
+
     expect(emailTextChildren, findsOneWidget);
+  });
+
+  testWidgets('Should present error if password is invalid',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    passwordErrorController.add('any error');
+    await tester.pump();
+
+    expect(find.text('any error'), findsOneWidget);
   });
 }
