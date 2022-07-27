@@ -25,7 +25,7 @@ main() {
     passwordErrorController = StreamController<String>();
     when(presenter.passwordErrorStream)
         .thenAnswer((_) => passwordErrorController.stream);
-    
+
     isFormValidController = StreamController<bool>();
     when(presenter.isFormValidStream)
         .thenAnswer((_) => isFormValidController.stream);
