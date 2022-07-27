@@ -129,4 +129,34 @@ main() {
 
     expect(find.text('any error'), findsOneWidget);
   });
+  testWidgets('Should present no error if password is valid',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    passwordErrorController.add(null);
+    await tester.pump();
+
+    final passwordTextChildren = find.descendant(
+      of: find.bySemanticsLabel('Senha'),
+      matching: find.byType(Text),
+    );
+
+    expect(passwordTextChildren, findsOneWidget);
+  });
+
+  testWidgets(
+      'Should present no error if password is valid and stream is a empty string',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    passwordErrorController.add('');
+    await tester.pump();
+
+    final passwordTextChildren = find.descendant(
+      of: find.bySemanticsLabel('Senha'),
+      matching: find.byType(Text),
+    );
+
+    expect(passwordTextChildren, findsOneWidget);
+  });
 }
